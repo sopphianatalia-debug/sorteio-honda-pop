@@ -14,6 +14,7 @@ const path = require('path');
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '6mb' })); // precisa de espaço pra imagem de comprovante em base64
+app.use(express.static(path.join(__dirname, 'public'))); // serve index.html, cliente.html, vendedor.html
 
 const DATA_FILE = path.join(__dirname, 'data.json');
 
@@ -180,8 +181,6 @@ app.post('/api/sorteio/resetar', (req, res) => {
   saveData();
   res.json({ ok: true });
 });
-
-app.get('/', (req, res) => res.send('Servidor do sorteio rodando. Use /api/state para testar.'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log('Servidor rodando na porta ' + PORT));
