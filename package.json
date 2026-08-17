@@ -1,0 +1,16 @@
+{
+  "name": "sorteio-honda-pop-backend",
+  "version": "2.0.0",
+  "description": "Back-end do sorteio: sincroniza o sistema do comprador com o painel do vendedor. Pix estatico do vendedor, sem gateway/banco no meio.",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
