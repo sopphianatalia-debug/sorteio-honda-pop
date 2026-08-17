@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comprar número — Sorteio Honda Pop 2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --asphalt:#16191d;
+  --asphalt-2:#1f2328;
+  --card:#242a30;
+  --card-2:#2b323a;
+  --line:#3a424b;
+  --white:#f4f3ee;
+  --muted:#9aa4ad;
+  --red:#d62828;
+  --red-dim:#8f1f22;
+  --amber:#e8a33d;
+  --green:#2e9e5b;
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(214,40,40,0.10), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 40px),
+    var(--asphalt);
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  min-height:100vh;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 20px 80px;}
+
+header.top{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+  padding-bottom:22px;margin-bottom:26px;border-bottom:1px solid var(--line);
+  flex-wrap:wrap;
+}
+.brand-eyebrow{
+  font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.18em;
+  color:var(--red);text-transform:uppercase;margin:0 0 6px;
+}
+h1.brand{
+  font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(24px,4vw,38px);
+  margin:0;letter-spacing:.01em;text-transform:uppercase;line-height:1.05;
+}
+h1.brand em{color:var(--red);font-style:normal;}
+.plate{
+  font-family:'Space Mono',monospace;background:var(--white);color:var(--asphalt);
+  border-radius:6px;padding:8px 14px;font-weight:700;letter-spacing:.12em;
+  box-shadow:var(--shadow);border:3px solid var(--asphalt-2);white-space:nowrap;
+}
+.system-tag{
+  display:inline-block;font-family:'Space Mono',monospace;font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--asphalt);
+  background:var(--amber);padding:4px 10px;border-radius:5px;margin-bottom:10px;font-weight:700;
+}
+
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:22px;margin-bottom:20px;box-shadow:var(--shadow);
+}
+.card h2{
+  font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.03em;
+  font-size:18px;margin:0 0 16px;color:var(--white);
+  display:flex;align-items:center;gap:10px;
+}
+.card h2 .dash{width:22px;height:2px;background:var(--red);display:inline-block;}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:20px;}
+.stat{
+  background:var(--card-2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;
+  position:relative;overflow:hidden;
+}
+.stat .num{font-family:'Oswald',sans-serif;font-size:30px;font-weight:700;line-height:1;}
+.stat .lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:6px;}
+.stat.arrecadado .num{color:var(--green);}
+.stat.aguardando .num{color:var(--amber);}
+.stat.vendidos .num{color:var(--red);}
+
+label{display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+input[type=text],input[type=tel],input[type=email],input[type=number],textarea{
+  width:100%;background:var(--asphalt-2);border:1px solid var(--line);border-radius:8px;
+  color:var(--white);padding:11px 13px;font-size:15px;font-family:'Inter',sans-serif;
+  margin-bottom:14px;
+}
+input:focus,textarea:focus{outline:2px solid var(--red);outline-offset:1px;border-color:var(--red);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:560px){.field-row{grid-template-columns:1fr;}}
+
+button.primary{
+  font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em;
+  background:var(--red);border:none;color:var(--white);padding:13px 24px;border-radius:8px;
+  font-size:15px;font-weight:600;cursor:pointer;transition:transform .1s ease, background .15s ease;
+}
+button.primary:hover{background:#c11f1f;}
+button.primary:active{transform:scale(.98);}
+button.primary:disabled{background:#5a5f66;cursor:not-allowed;}
+button.ghost{
+  font-family:'Inter',sans-serif;background:transparent;border:1px solid var(--line);color:var(--muted);
+  padding:9px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;
+}
+button.ghost:hover{border-color:var(--white);color:var(--white);}
+button.small-green{background:var(--green);color:#fff;border:none;padding:7px 12px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;}
+button.small-red{background:var(--red-dim);color:#fff;border:none;padding:7px 12px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;}
+
+.mode-switch{display:flex;gap:10px;margin-bottom:16px;}
+.mode-opt{
+  flex:1;border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;
+  background:var(--card-2);transition:all .15s ease;
+}
+.mode-opt.selected{border-color:var(--red);background:rgba(214,40,40,0.12);}
+.mode-opt .t{font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.03em;}
+.mode-opt .d{font-size:12px;color:var(--muted);margin-top:3px;}
+
+.legend{display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}
+.grid-numbers{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:7px;
+  max-height:340px;overflow-y:auto;padding:12px;background:var(--asphalt-2);
+  border-radius:10px;border:1px solid var(--line);
+}
+.num-tile{
+  font-family:'Space Mono',monospace;font-weight:700;font-size:13px;
+  background:var(--card);border:1px solid var(--line);border-radius:6px;
+  padding:9px 0;text-align:center;cursor:pointer;color:var(--muted);
+  transition:all .1s ease;user-select:none;
+}
+.num-tile:hover{border-color:var(--white);color:var(--white);}
+.num-tile.paid{background:var(--red);border-color:var(--red);color:#fff;cursor:not-allowed;opacity:.85;}
+.num-tile.reserved{background:var(--amber);border-color:var(--amber);color:#1c1f24;cursor:not-allowed;}
+.num-tile.picked{background:var(--white);border-color:var(--white);color:var(--asphalt);}
+
+.selected-summary{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  background:var(--card-2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:14px;
+}
+.selected-summary .nums{font-family:'Space Mono',monospace;color:var(--white);font-size:14px;}
+.selected-summary .total{font-family:'Oswald',sans-serif;font-size:22px;color:var(--green);font-weight:700;}
+
+.pix-box{background:var(--card-2);border:1px dashed var(--red);border-radius:10px;padding:18px;text-align:center;}
+.pix-key{
+  font-family:'Space Mono',monospace;background:var(--asphalt-2);border:1px solid var(--line);
+  border-radius:8px;padding:12px;word-break:break-all;margin:12px 0;font-size:13px;
+}
+.pix-qr{background:#fff;padding:10px;border-radius:10px;display:inline-block;margin:10px 0;}
+.pix-qr img{display:block;width:190px;height:190px;}
+.status-pill{
+  display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;
+  font-size:12px;color:var(--amber);margin-top:10px;
+}
+.status-pill.pago{color:var(--green);}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor;animation:pulse 1.4s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;}
+th{
+  text-align:left;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.03em;
+  font-size:11.5px;color:var(--muted);padding:9px 10px;border-bottom:1px solid var(--line);
+}
+td{padding:11px 10px;border-bottom:1px solid var(--asphalt-2);vertical-align:top;}
+tr:hover td{background:rgba(255,255,255,0.02);}
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;}
+.badge.pago{background:rgba(46,158,91,0.18);color:var(--green);}
+.badge.pendente{background:rgba(232,163,61,0.18);color:var(--amber);}
+.actions-cell{display:flex;gap:6px;flex-wrap:wrap;}
+
+.empty-note{color:var(--muted);font-size:14px;padding:18px 0;text-align:center;}
+.toast{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  background:var(--card);border:1px solid var(--line);color:var(--white);
+  padding:12px 20px;border-radius:8px;box-shadow:var(--shadow);font-size:14px;
+  opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;z-index:999;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+.search-bar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.search-bar input{margin-bottom:0;flex:1;min-width:180px;}
+.config-note{font-size:12px;color:var(--muted);margin-top:-8px;margin-bottom:14px;}
+.tabs{display:flex;gap:8px;margin-bottom:24px;}
+.tab-btn{
+  font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em;
+  background:transparent;border:1px solid var(--line);color:var(--muted);
+  padding:11px 22px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;
+  transition:all .15s ease;
+}
+.tab-btn:hover{border-color:var(--red);color:var(--white);}
+.tab-btn.active{background:var(--red);border-color:var(--red);color:var(--white);}
+.view{display:none;}
+.view.active{display:block;}
+
+.conn-note{font-size:12px;color:var(--muted);margin-bottom:18px;}
+.conn-note.err{color:var(--red);}
+
+.badge.reservado{background:rgba(154,164,173,0.18);color:var(--muted);}
+.upload-box{
+  border:1.5px dashed var(--line);border-radius:10px;padding:16px;text-align:center;
+  cursor:pointer;background:var(--asphalt-2);transition:border-color .15s ease;
+}
+.upload-box:hover{border-color:var(--amber);}
+.upload-box.has-file{border-color:var(--green);border-style:solid;}
+.upload-box input{display:none;}
+.receipt-preview{max-width:140px;max-height:140px;border-radius:8px;margin-top:10px;border:1px solid var(--line);cursor:pointer;}
+.divider-or{
+  display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--muted);
+  font-family:'Space Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.1em;
+}
+.divider-or::before,.divider-or::after{content:'';flex:1;height:1px;background:var(--line);}
+.receipt-modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;
+  align-items:center;justify-content:center;z-index:1000;padding:20px;
+}
+.receipt-modal.show{display:flex;}
+.receipt-modal img{max-width:90vw;max-height:85vh;border-radius:8px;}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <p class="brand-eyebrow">Sorteio &bull; edição especial</p>
+      <h1 class="brand">Concorra a uma <em>Honda Pop</em><br>2023 Branca</h1>
+    </div>
+  </header>
+
+  <p class="conn-note" id="conn-note">Conectando ao servidor...</p>
+
+  <div class="card">
+    <h2><span class="dash"></span>1. Escolha seus números</h2>
+    <div class="mode-switch">
+      <div class="mode-opt selected" id="mode-auto">
+        <div class="t">Escolha automática</div>
+        <div class="d">O sistema sorteia números disponíveis pra você</div>
+      </div>
+      <div class="mode-opt" id="mode-manual">
+        <div class="t">Escolha manual</div>
+        <div class="d">Clique nos números que quiser no mapa</div>
+      </div>
+    </div>
+
+    <div id="auto-controls" style="display:flex; gap:12px; align-items:flex-end; margin-bottom:16px;">
+      <div style="flex:1; max-width:160px;">
+        <label>Quantidade</label>
+        <input type="number" id="auto-qty" value="1" min="1">
+      </div>
+      <button class="primary" id="btn-sortear" style="margin-bottom:14px;">Sortear números</button>
+    </div>
+
+    <div class="legend">
+      <span><i style="background:var(--card);border:1px solid var(--line)"></i> Disponível</span>
+      <span><i style="background:var(--white)"></i> Selecionado</span>
+      <span><i style="background:var(--amber)"></i> Reservado / aguardando</span>
+      <span><i style="background:var(--red)"></i> Vendido</span>
+    </div>
+    <div class="grid-numbers" id="grid-numbers"></div>
+
+    <div class="selected-summary">
+      <div class="nums" id="selected-nums">Nenhum número selecionado</div>
+      <div class="total" id="selected-total">R$ 0,00</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dash"></span>2. Seus dados</h2>
+    <div class="field-row">
+      <div>
+        <label>Nome completo</label>
+        <input type="text" id="buyer-name" placeholder="Ex: Maria da Silva">
+      </div>
+      <div>
+        <label>WhatsApp</label>
+        <input type="tel" id="buyer-phone" placeholder="Ex: (63) 99999-9999">
+      </div>
+    </div>
+    <button class="primary" id="btn-reservar">Reservar números e ver valor a pagar</button>
+  </div>
+
+  <div class="card" id="pagamento-card" style="display:none;">
+    <h2><span class="dash"></span>3. Pagamento via Pix</h2>
+    <div class="pix-box">
+      <div style="font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Valor a pagar</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:34px;font-weight:700;color:var(--green);" id="pay-total">R$ 0,00</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:10px;">Chave Pix do vendedor</div>
+      <div class="pix-key" id="pay-pixkey">—</div>
+      <button class="ghost" id="btn-copiar-pix">Copiar chave</button>
+    </div>
+  </div>
+
+  <div class="card" id="comprovante-card" style="display:none;">
+    <h2><span class="dash"></span>4. Confirme seu pagamento</h2>
+    <p style="font-size:13px;color:var(--muted);">
+      Preencha pelo menos um dos dois campos abaixo — o código de autenticação do Pix
+      <strong>ou</strong> uma foto/print do comprovante.
+    </p>
+
+    <label>Código de autenticação do Pix (opcional se anexar comprovante)</label>
+    <input type="text" id="proof-code" placeholder="Ex: E12345678202608171530abc123">
+
+    <div class="divider-or">ou</div>
+
+    <label>Comprovante (opcional se preencher o código acima)</label>
+    <div class="upload-box" id="upload-box">
+      <input type="file" id="receipt-input" accept="image/*">
+      <div id="upload-label">Toque para escolher a imagem do comprovante</div>
+      <img id="receipt-preview" class="receipt-preview" style="display:none;">
+    </div>
+
+    <button class="primary" id="btn-enviar-comprovante" style="margin-top:18px;">Enviar confirmação</button>
+  </div>
+
+  <div class="card" id="reserva-card" style="display:none;">
+    <h2><span class="dash"></span>Aguardando conferência</h2>
+    <p style="color:var(--muted);">
+      Seus números <strong id="reserva-nums" style="color:var(--white)"></strong> estão reservados em seu nome.
+      Assim que o vendedor conferir o pagamento no extrato, eles passam para <span style="color:var(--green);font-weight:700;">pago</span>.
+    </p>
+    <div class="status-pill" id="status-pill"><span class="dot"></span> <span id="status-text">Aguardando confirmação do vendedor...</span></div>
+    <br><br>
+    <button class="ghost" id="btn-cancelar-reserva">Cancelar minha reserva</button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  // ⚠️ Depois de publicar o back-end (server.js), troque a URL abaixo
+  // pela URL pública do seu servidor (ex: https://seu-servico.onrender.com).
+  const BASE_URL = '';
+
+  let config = { prizeTitle:'Honda Pop 2023 Branca', totalNumbers:200, price:25, drawDate:'', pixKey:'' };
+  let tickets = {};
+  let selectedNumbers = [];
+  let mode = 'auto';
+  let currentSaleId = null;
+  let statusPoll = null;
+  let receiptImageData = '';
+
+  function money(v){ return v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'}); }
+  function pad(n, total){
+    const width = String(Math.max(total-1,1)).length;
+    return String(n).padStart(Math.max(width,2),'0');
+  }
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 2600);
+  }
+  function statusOf(key){ return tickets[key] ? tickets[key].status : 'disponivel'; }
+
+  async function api(path, opts){
+    const res = await fetch(BASE_URL + path, { headers:{'Content-Type':'application/json'}, ...opts });
+    const body = await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(body.error || 'Erro no servidor.');
+    return body;
+  }
+
+  async function refreshState(){
+    try{
+      const r = await api('/api/state');
+      config = r.config; tickets = r.tickets;
+      document.getElementById('conn-note').textContent = 'Conectado ao servidor.';
+      document.getElementById('conn-note').classList.remove('err');
+      renderGrid();
+    }catch(e){
+      document.getElementById('conn-note').textContent = 'Não foi possível conectar ao servidor. Configure a BASE_URL no topo do arquivo cliente.html.';
+      document.getElementById('conn-note').classList.add('err');
+    }
+  }
+
+  function renderGrid(){
+    const total = config.totalNumbers;
+    const grid = document.getElementById('grid-numbers');
+    grid.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    for(let i=1;i<=total;i++){
+      const key = pad(i,total);
+      const st = statusOf(key);
+      const tile = document.createElement('div');
+      tile.className = 'num-tile';
+      tile.textContent = key;
+      if(st === 'pago') tile.classList.add('paid');
+      else if(st === 'reservado' || st === 'aguardando') tile.classList.add('reserved');
+      else if(selectedNumbers.includes(key)) tile.classList.add('picked');
+      if(st === 'disponivel'){
+        tile.addEventListener('click', ()=>{ if(mode==='manual') toggleSelect(key); });
+      }
+      frag.appendChild(tile);
+    }
+    grid.appendChild(frag);
+    renderSelectedSummary();
+  }
+
+  function toggleSelect(key){
+    const idx = selectedNumbers.indexOf(key);
+    if(idx>-1) selectedNumbers.splice(idx,1); else selectedNumbers.push(key);
+    renderGrid();
+  }
+
+  function renderSelectedSummary(){
+    const numsEl = document.getElementById('selected-nums');
+    const totalEl = document.getElementById('selected-total');
+    numsEl.textContent = selectedNumbers.length ? selectedNumbers.slice().sort().join(' · ') : 'Nenhum número selecionado';
+    totalEl.textContent = money(selectedNumbers.length * config.price);
+  }
+
+  function sortearNumeros(qty){
+    const total = config.totalNumbers;
+    const available = [];
+    for(let i=1;i<=total;i++){
+      const key = pad(i,total);
+      if(statusOf(key)==='disponivel' && !selectedNumbers.includes(key)) available.push(key);
+    }
+    if(available.length===0){ showToast('Não há mais números disponíveis.'); return; }
+    const n = Math.min(qty, available.length);
+    for(let i=0;i<n;i++){
+      const idx = Math.floor(Math.random()*available.length);
+      selectedNumbers.push(available[idx]);
+      available.splice(idx,1);
+    }
+    renderGrid();
+  }
+
+  async function reservarNumeros(){
+    if(selectedNumbers.length===0){ showToast('Selecione ao menos um número.'); return; }
+    const buyerName = document.getElementById('buyer-name').value.trim();
+    const buyerPhone = document.getElementById('buyer-phone').value.trim();
+    if(!buyerName || !buyerPhone){ showToast('Preencha nome e WhatsApp.'); return; }
+
+    const btn = document.getElementById('btn-reservar');
+    btn.disabled = true; btn.textContent = 'Reservando...';
+    try{
+      const r = await api('/api/sale', {
+        method:'POST',
+        body: JSON.stringify({ buyerName, buyerPhone, numbers: selectedNumbers })
+      });
+      currentSaleId = r.saleId;
+      document.getElementById('pay-total').textContent = money(r.total);
+      document.getElementById('pay-pixkey').textContent = r.pixKey || '(o vendedor ainda não configurou a chave Pix)';
+      document.getElementById('pagamento-card').style.display = 'block';
+      document.getElementById('comprovante-card').style.display = 'block';
+      document.getElementById('pagamento-card').scrollIntoView({behavior:'smooth', block:'start'});
+      await refreshState();
+    }catch(e){
+      showToast(e.message);
+      await refreshState();
+    }finally{
+      btn.disabled = false; btn.textContent = 'Reservar números e ver valor a pagar';
+    }
+  }
+
+  async function enviarComprovante(){
+    if(!currentSaleId) return;
+    const proofCode = document.getElementById('proof-code').value.trim();
+    if(!proofCode && !receiptImageData){
+      showToast('Informe o código de autenticação ou anexe o comprovante.');
+      return;
+    }
+    const btn = document.getElementById('btn-enviar-comprovante');
+    btn.disabled = true; btn.textContent = 'Enviando...';
+    try{
+      await api(`/api/sale/${currentSaleId}/comprovante`, {
+        method:'POST',
+        body: JSON.stringify({ proofCode, receiptImage: receiptImageData })
+      });
+      document.getElementById('pagamento-card').style.display = 'none';
+      document.getElementById('comprovante-card').style.display = 'none';
+      document.getElementById('reserva-card').style.display = 'block';
+      document.getElementById('reserva-nums').textContent = selectedNumbers.slice().sort().join(' · ');
+      document.getElementById('reserva-card').scrollIntoView({behavior:'smooth', block:'start'});
+      startStatusPolling();
+      showToast('Confirmação enviada! Aguarde o vendedor conferir.');
+    }catch(e){
+      showToast(e.message);
+    }finally{
+      btn.disabled = false; btn.textContent = 'Enviar confirmação';
+    }
+  }
+
+  function startStatusPolling(){
+    clearInterval(statusPoll);
+    statusPoll = setInterval(async ()=>{
+      if(!currentSaleId) return;
+      try{
+        const r = await api(`/api/sale/${currentSaleId}/status`);
+        if(r.status === 'pago'){
+          document.getElementById('status-pill').classList.add('pago');
+          document.getElementById('status-text').textContent = 'Pagamento confirmado! Seus números são seus. 🎉';
+          clearInterval(statusPoll);
+        }
+      }catch(e){ /* venda pode ter sido cancelada pelo vendedor */ }
+      refreshState();
+    }, 6000);
+  }
+
+  async function cancelarReserva(){
+    if(!currentSaleId) return;
+    try{
+      await api(`/api/sale/${currentSaleId}/cancelar`, { method:'POST' });
+      showToast('Reserva cancelada.');
+    }catch(e){ showToast(e.message); }
+    clearInterval(statusPoll);
+    currentSaleId = null;
+    selectedNumbers = [];
+    receiptImageData = '';
+    document.getElementById('pagamento-card').style.display = 'none';
+    document.getElementById('comprovante-card').style.display = 'none';
+    document.getElementById('reserva-card').style.display = 'none';
+    await refreshState();
+  }
+
+  function handleFile(file){
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const maxW = 900;
+        const scale = Math.min(1, maxW / img.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        receiptImageData = canvas.toDataURL('image/jpeg', 0.7);
+        document.getElementById('receipt-preview').src = receiptImageData;
+        document.getElementById('receipt-preview').style.display = 'block';
+        document.getElementById('upload-label').textContent = 'Comprovante anexado ✓ (toque para trocar)';
+        document.getElementById('upload-box').classList.add('has-file');
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  document.getElementById('mode-auto').addEventListener('click', ()=>{
+    mode='auto';
+    document.getElementById('mode-auto').classList.add('selected');
+    document.getElementById('mode-manual').classList.remove('selected');
+    document.getElementById('auto-controls').style.display='flex';
+  });
+  document.getElementById('mode-manual').addEventListener('click', ()=>{
+    mode='manual';
+    document.getElementById('mode-manual').classList.add('selected');
+    document.getElementById('mode-auto').classList.remove('selected');
+    document.getElementById('auto-controls').style.display='none';
+  });
+  document.getElementById('btn-sortear').addEventListener('click', ()=>{
+    const qty = Math.max(1, parseInt(document.getElementById('auto-qty').value,10)||1);
+    sortearNumeros(qty);
+  });
+  document.getElementById('btn-reservar').addEventListener('click', reservarNumeros);
+  document.getElementById('btn-enviar-comprovante').addEventListener('click', enviarComprovante);
+  document.getElementById('btn-cancelar-reserva').addEventListener('click', cancelarReserva);
+  document.getElementById('btn-copiar-pix').addEventListener('click', ()=>{
+    const txt = document.getElementById('pay-pixkey').textContent;
+    navigator.clipboard.writeText(txt).then(()=>showToast('Chave Pix copiada!')).catch(()=>showToast('Copie manualmente.'));
+  });
+  document.getElementById('upload-box').addEventListener('click', ()=>document.getElementById('receipt-input').click());
+  document.getElementById('receipt-input').addEventListener('change', (e)=>handleFile(e.target.files[0]));
+
+  refreshState();
+  setInterval(refreshState, 8000);
+})();
+</script>
+</body>
+</html>
