@@ -22,24 +22,24 @@ const DEFAULT_CONFIG = {
   totalNumbers: 200,
   price: 25,
   drawDate: '',
-  pixKey: '',
-  nextCents: 1 // contador que gera o valor final único (ex: 25,01 / 25,02 / 25,03...)
+  pixKey: ''
 };
 
 function loadData() {
   if (!fs.existsSync(DATA_FILE)) {
-    return { config: { ...DEFAULT_CONFIG }, tickets: {}, sales: {} };
+    return { config: { ...DEFAULT_CONFIG }, tickets: {}, sales: {}, draw: null };
   }
   try {
     const parsed = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
     return {
       config: { ...DEFAULT_CONFIG, ...(parsed.config || {}) },
       tickets: parsed.tickets || {},
-      sales: parsed.sales || {}
+      sales: parsed.sales || {},
+      draw: parsed.draw || null
     };
   } catch (e) {
     console.error('Falha ao ler data.json, iniciando do zero.', e);
-    return { config: { ...DEFAULT_CONFIG }, tickets: {}, sales: {} };
+    return { config: { ...DEFAULT_CONFIG }, tickets: {}, sales: {}, draw: null };
   }
 }
 function saveData() {
@@ -47,12 +47,6 @@ function saveData() {
 }
 
 let data = loadData();
-
-function nextUniqueCents() {
-  const c = data.config.nextCents;
-  data.config.nextCents = c >= 99 ? 1 : c + 1;
-  return c;
-}
 
 // -------- rotas usadas pelo cliente.html --------
 
@@ -72,14 +66,12 @@ app.post('/api/sale', (req, res) => {
       return res.status(409).json({ error: `O número ${n} não está mais disponível.` });
     }
   }
-  const baseTotal = numbers.length * data.config.price;
-  const cents = nextUniqueCents();
-  const total = Math.floor(baseTotal) + cents / 100;
+  const total = numbers.length * data.config.price;
   const saleId = 'S' + Date.now() + Math.random().toString(36).slice(2, 6);
 
   data.sales[saleId] = {
     id: saleId, buyerName, buyerPhone, numbers,
-    baseTotal, uniqueCents: cents, total,
+    total,
     proofCode: '', receiptImage: '',
     status: 'reservado', // reservado -> aguardando (comprovante enviado) -> pago
     createdAt: Date.now()
@@ -127,7 +119,7 @@ app.post('/api/sale/:id/cancelar', (req, res) => {
 // -------- rotas usadas pelo vendedor.html --------
 
 app.get('/api/sales', (req, res) => {
-  res.json({ sales: data.sales, config: data.config });
+  res.json({ sales: data.sales, config: data.config, draw: data.draw });
 });
 
 app.post('/api/config', (req, res) => {
@@ -159,6 +151,32 @@ app.post('/api/sale/:id/estornar', (req, res) => {
   if (!sale) return res.status(404).json({ error: 'Venda não encontrada.' });
   sale.numbers.forEach(n => delete data.tickets[n]);
   delete data.sales[req.params.id];
+  saveData();
+  res.json({ ok: true });
+});
+
+// -------- sorteio --------
+
+// realiza o sorteio entre os números pagos e já traz os dados do comprador
+app.post('/api/sorteio', (req, res) => {
+  const paidNumbers = Object.keys(data.tickets).filter(n => data.tickets[n].status === 'pago');
+  if (paidNumbers.length === 0) {
+    return res.status(400).json({ error: 'Ainda não há nenhum número pago para sortear.' });
+  }
+  const winner = paidNumbers[Math.floor(Math.random() * paidNumbers.length)];
+  const winnerTicket = data.tickets[winner];
+  data.draw = {
+    number: winner,
+    buyerName: winnerTicket.buyerName,
+    buyerPhone: winnerTicket.buyerPhone,
+    drawnAt: Date.now()
+  };
+  saveData();
+  res.json({ draw: data.draw });
+});
+
+app.post('/api/sorteio/resetar', (req, res) => {
+  data.draw = null;
   saveData();
   res.json({ ok: true });
 });
